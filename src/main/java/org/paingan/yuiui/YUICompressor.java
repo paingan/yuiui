@@ -5,6 +5,7 @@
  */
 package org.paingan.yuiui;
 
+import com.yahoo.platform.yui.compressor.CssCompressor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,32 +27,55 @@ import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
  * @author paulusyansen
  */
 public class YUICompressor {
-    public static void main(String args[]) {
-        try {
- 
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
- 
     private static Logger logger = Logger.getLogger(YUICompressor.class.getName());
     
+   /**
+     * 
+     * @param inputFilename
+     * @param outputFilename
+     * @param o
+     * @throws IOException 
+     */
     public static void compressJavaScript(String inputFilename, String outputFilename, Options o) throws IOException {
-    Reader in = null;
-    Writer out = null;
-    try {
-        in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
- 
-        JavaScriptCompressor compressor = new JavaScriptCompressor(in, new YuiCompressorErrorReporter());
-        in.close(); in = null;
- 
-        out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
-        compressor.compress(out, o.lineBreakPos, o.munge, o.verbose, o.preserveAllSemiColons, o.disableOptimizations);
-    } finally {
-        IOUtils.closeQuietly(in);
-        IOUtils.closeQuietly(out);
+        Reader in = null;
+        Writer out = null;
+        try {
+            in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
+
+            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new YuiCompressorErrorReporter());
+            in.close(); in = null;
+
+            out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
+            compressor.compress(out, o.lineBreakPos, o.munge, o.verbose, o.preserveAllSemiColons, o.disableOptimizations);
+        } finally {
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
+        }
     }
-}
+    
+    /**
+     * 
+     * @param inputFilename
+     * @param outputFilename
+     * @param o
+     * @throws IOException 
+     */
+    public static void compressCSS(String inputFilename, String outputFilename, Options o) throws IOException {
+        Reader in = null;
+        Writer out = null;
+        try {
+            in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
+
+            CssCompressor compressor = new CssCompressor(in);
+            in.close(); in = null;
+
+            out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
+            compressor.compress(out, o.lineBreakPos);
+        } finally {
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
+        }
+    }
 }
 
 class YuiCompressorErrorReporter implements ErrorReporter {

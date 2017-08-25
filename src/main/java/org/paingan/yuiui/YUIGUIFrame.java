@@ -5,22 +5,11 @@
  */
 package org.paingan.yuiui;
 
-import com.yahoo.platform.yui.compressor.CssCompressor;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -45,21 +34,22 @@ public class YUIGUIFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jspConsole = new javax.swing.JScrollPane();
         txtConsole = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        lblSource = new javax.swing.JLabel();
         txtPath = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple YUI Compressor");
+        setName("frm"); // NOI18N
         setResizable(false);
 
         txtConsole.setEditable(false);
         txtConsole.setColumns(20);
         txtConsole.setRows(5);
-        jScrollPane1.setViewportView(txtConsole);
+        jspConsole.setViewportView(txtConsole);
 
-        jLabel1.setText("File Source:");
+        lblSource.setText("File Source:");
 
         txtPath.setEditable(false);
         txtPath.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -76,10 +66,10 @@ public class YUIGUIFrame extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblSource)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPath))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -87,10 +77,10 @@ public class YUIGUIFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblSource)
                     .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -127,11 +117,11 @@ public class YUIGUIFrame extends javax.swing.JFrame {
         try {
             
             if(".js".equals(ext)) {
-                compressJavaScript(inputFilename, outputFilename, o);
+                YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
                 txtConsole.append(jfc.getSelectedFile().getName()+" JS file compress successfully\n");
             } 
             if(".css".equals(ext)) {
-                compressCSS(inputFilename, outputFilename, o);
+                YUICompressor.compressCSS(inputFilename, outputFilename, o);
                 txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
             }
             
@@ -141,27 +131,6 @@ public class YUIGUIFrame extends javax.swing.JFrame {
             txtConsole.append(ex.getMessage()+"\n");
         }
     }//GEN-LAST:event_txtPathMouseClicked
-
-    private String executeCommand(String command) {
-	StringBuffer output = new StringBuffer();
-
-	Process p;
-	try {
-            p = Runtime.getRuntime().exec(command);
-            p.waitFor();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            String line = "";
-            while ((line = reader.readLine())!= null) {
-		output.append(line + "\n");
-            }
-
-	} catch (Exception e) {
-            e.printStackTrace();
-	}
-
-	return output.toString();
-    }
     
     /**
      * @param args the command line arguments
@@ -198,92 +167,13 @@ public class YUIGUIFrame extends javax.swing.JFrame {
         });
     }
     
-    /**
-     * 
-     * @param inputFilename
-     * @param outputFilename
-     * @param o
-     * @throws IOException 
-     */
-    public static void compressJavaScript(String inputFilename, String outputFilename, Options o) throws IOException {
-        Reader in = null;
-        Writer out = null;
-        try {
-            in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
-
-            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new YuiCompressorErrorReporter());
-            in.close(); in = null;
-
-            out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
-            compressor.compress(out, o.lineBreakPos, o.munge, o.verbose, o.preserveAllSemiColons, o.disableOptimizations);
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
-        }
-    }
     
-    /**
-     * 
-     * @param inputFilename
-     * @param outputFilename
-     * @param o
-     * @throws IOException 
-     */
-    public static void compressCSS(String inputFilename, String outputFilename, Options o) throws IOException {
-        Reader in = null;
-        Writer out = null;
-        try {
-            in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
-
-            CssCompressor compressor = new CssCompressor(in);
-            in.close(); in = null;
-
-            out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
-            compressor.compress(out, o.lineBreakPos);
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
-        }
-    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jspConsole;
+    private javax.swing.JLabel lblSource;
     private javax.swing.JTextArea txtConsole;
     private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables
 }
-
-//private static class YuiCompressorErrorReporter implements ErrorReporter {
-//    public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
-//        if (line < 0) {
-//            logger.log(Level.WARNING, message);
-//        } else {
-//            logger.log(Level.WARNING, line + ':' + lineOffset + ':' + message);
-//        }
-//    }
-// 
-//    public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
-//        if (line < 0) {
-//            logger.log(Level.SEVERE, message);
-//        } else {
-//            logger.log(Level.SEVERE, line + ':' + lineOffset + ':' + message);
-//        }
-//    }
-// 
-//    public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource, int lineOffset) {
-//        error(message, sourceName, line, lineSource, lineOffset);
-//        return new EvaluatorException(message);
-//    }
-//}
-
-//class Options {
-//    public String charset = "UTF-8";
-//    public int lineBreakPos = -1;
-//    public boolean munge = true;
-//    public boolean verbose = false;
-//    public boolean preserveAllSemiColons = false;
-//    public boolean disableOptimizations = false;
-//}
-
