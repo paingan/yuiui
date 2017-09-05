@@ -5,6 +5,7 @@
  */
 package org.paingan.yuiui;
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -40,7 +41,7 @@ public class YUIGUIFrame extends javax.swing.JFrame {
         txtPath = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Simple YUI Compressor");
+        setTitle("Simple YUI Compressor v0.1b");
         setName("frm"); // NOI18N
         setResizable(false);
 
@@ -88,7 +89,7 @@ public class YUIGUIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPathMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPathMouseClicked
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript","js","css");
         jfc.setFileFilter(filter);
     
