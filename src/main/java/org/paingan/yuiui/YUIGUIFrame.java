@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 
 /**
  *
@@ -90,46 +89,80 @@ public class YUIGUIFrame extends javax.swing.JFrame {
 
     private void txtPathMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPathMouseClicked
         JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript","js","css");
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript, css","js","css");
         jfc.setFileFilter(filter);
-    
-        jfc.setDialogTitle("Choose a directory to save your file: ");
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        jfc.setDialogTitle("Choose a directory or file: ");
+        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        jfc.setMultiSelectionEnabled(false);
 
         int returnValue = jfc.showSaveDialog(null);
+        
         if (returnValue == JFileChooser.APPROVE_OPTION) {
+            
             if (jfc.getSelectedFile().isFile()) {
-                txtConsole.append("\nPath: " + jfc.getSelectedFile().getParent() +"\nFileName:"+jfc.getSelectedFile().getName()+"\n");
                 txtPath.setText(jfc.getSelectedFile().getAbsolutePath());
+                
+                String inputFilename = jfc.getSelectedFile().getAbsolutePath();
+                int index = jfc.getSelectedFile().getName().indexOf(".");
+                String filename = jfc.getSelectedFile().getName().substring(0, index);
+                String ext = jfc.getSelectedFile().getName().substring(index);
+
+                String outputFilename = jfc.getSelectedFile().getParent() +"/"+ filename +".min"+ ext;
+                Options o = new Options();
+
+                try {
+                    if(".js".equals(ext)) {
+                        YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
+                        txtConsole.append(jfc.getSelectedFile().getName()+" JS file compress successfully\n");
+                    } 
+                    if(".css".equals(ext)) {
+                        YUICompressor.compressCSS(inputFilename, outputFilename, o);
+                        txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
+                    }
+
+                } catch (Exception ex) {
+                    Logger.getLogger(YUIGUIFrame.class.getName()).log(Level.SEVERE, null, ex);
+
+                    txtConsole.append(ex.getMessage()+"\n");
+                }
+            }
+            
+            if(jfc.getSelectedFile().isDirectory()) {
+                File[] filesInDirectory = jfc.getSelectedFile().listFiles();
+                
+                for ( File file : filesInDirectory ) {
+                    txtPath.setText(jfc.getSelectedFile().getAbsolutePath());
+                    
+                    String fileNameExt = file.getName();
+                    String inputFilename = file.getAbsolutePath();
+                    int index = fileNameExt.indexOf(".");
+                    
+                    if(index > 0) { // must has extension
+                        String ext = fileNameExt.substring(index);
+                        String filename = fileNameExt.substring(0, index);
+                        String outputFilename = file.getParent() +"/"+ filename +".min"+ ext;
+                        Options o = new Options();
+                        
+                        try {
+                            if(".js".equals(ext)) {
+                                YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
+                                txtConsole.append(jfc.getSelectedFile().getName()+" JS file compress successfully\n");
+                            } 
+                            if(".css".equals(ext)) {
+                                YUICompressor.compressCSS(inputFilename, outputFilename, o);
+                                txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
+                            }
+
+                        } catch (Exception ex) {
+                            Logger.getLogger(YUIGUIFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            txtConsole.append(ex.getMessage()+"\n");
+                        }
+                    }
+                }
             }
         } else {
             txtConsole.setText("No file chosen!");
-        }
-        
-        String inputFilename = jfc.getSelectedFile().getAbsolutePath();
-        int index = jfc.getSelectedFile().getName().indexOf(".");
-        String filename = jfc.getSelectedFile().getName().substring(0, index);
-        String ext = jfc.getSelectedFile().getName().substring(index);
-        
-        String outputFilename = jfc.getSelectedFile().getParent()+"/"+filename+".min"+ext;
-        Options o = new Options(); // use defaults
-        
-        txtConsole.append("\nExt: " + ext +"\n");
-        try {
-            
-            if(".js".equals(ext)) {
-                YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
-                txtConsole.append(jfc.getSelectedFile().getName()+" JS file compress successfully\n");
-            } 
-            if(".css".equals(ext)) {
-                YUICompressor.compressCSS(inputFilename, outputFilename, o);
-                txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
-            }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(YUIGUIFrame.class.getName()).log(Level.SEVERE, null, ex);
-            
-            txtConsole.append(ex.getMessage()+"\n");
         }
     }//GEN-LAST:event_txtPathMouseClicked
     
