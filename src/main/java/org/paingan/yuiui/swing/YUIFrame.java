@@ -3,24 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.paingan.yuiui;
+package org.paingan.yuiui.swing;
 
+import org.paingan.yuiui.service.YUICompressor;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.paingan.yuiui.Options;
 
 /**
  *
  * @author paulusyansen
  */
-public class YUIGUIFrame extends javax.swing.JFrame {
+public class YUIFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form YUIGUIFrame
      */
-    public YUIGUIFrame() {
+    public YUIFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -126,7 +128,7 @@ public class YUIGUIFrame extends javax.swing.JFrame {
                     }
 
                 } catch (Exception ex) {
-                    Logger.getLogger(YUIGUIFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(YUIFrame.class.getName()).log(Level.SEVERE, null, ex);
 
                     txtConsole.append(ex.getMessage()+"\n");
                 }
@@ -163,7 +165,7 @@ public class YUIGUIFrame extends javax.swing.JFrame {
                             }
 
                         } catch (Exception ex) {
-                            Logger.getLogger(YUIGUIFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(YUIFrame.class.getName()).log(Level.SEVERE, null, ex);
                             txtConsole.append(ex.getMessage()+"\n");
                         }
                     }
@@ -191,20 +193,21 @@ public class YUIGUIFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YUIGUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YUIGUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YUIGUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YUIGUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new YUIGUIFrame().setVisible(true);
+                new YUIFrame().setVisible(true);
             }
         });
     }

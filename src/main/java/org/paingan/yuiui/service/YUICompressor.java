@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.paingan.yuiui;
+package org.paingan.yuiui.service;
 
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.yahoo.platform.yui.compressor.CssCompressor;
@@ -22,6 +22,7 @@ import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
  
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
+import org.paingan.yuiui.Options;
 
 /**
  *
