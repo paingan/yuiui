@@ -106,6 +106,8 @@ public class YUICompressor {
             String html = builder.toString();
             
             if(html != null && !"".equals(html)) {
+                out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
+                html = compressor.compress(html);
                 out.write(html);
             } 
         } finally {

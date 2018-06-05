@@ -120,6 +120,10 @@ public class YUIGUIFrame extends javax.swing.JFrame {
                         YUICompressor.compressCSS(inputFilename, outputFilename, o);
                         txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
                     }
+                    if(".html".equals(ext)) {
+                        YUICompressor.compressHTML(inputFilename, outputFilename, o);
+                        txtConsole.append(jfc.getSelectedFile().getName()+" HTML file compress successfully\n");
+                    }
 
                 } catch (Exception ex) {
                     Logger.getLogger(YUIGUIFrame.class.getName()).log(Level.SEVERE, null, ex);
