@@ -5,6 +5,7 @@
  */
 package org.paingan.yuiui;
 
+import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.yahoo.platform.yui.compressor.CssCompressor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -71,6 +72,42 @@ public class YUICompressor {
 
             out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
             compressor.compress(out, o.lineBreakPos);
+        } finally {
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
+        }
+    }
+    
+    /**
+     * 
+     * @param inputFilename
+     * @param outputFilename
+     * @param o
+     * @throws IOException 
+     */
+    public static void compressHTML(String inputFilename, String outputFilename, Options o) throws IOException {
+        Reader in = null;
+        Writer out = null;
+        StringBuilder builder = new StringBuilder();
+        try {
+            in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
+
+            HtmlCompressor compressor =new HtmlCompressor();
+            compressor.setCompressJavaScript(true);
+            compressor.setCompressCss(true);
+            
+            
+            char[] buffer = new char[8192];
+            int read;
+            while ((read = in.read(buffer, 0, buffer.length)) > 0) {
+                builder.append(buffer, 0, read);
+            }
+            
+            String html = builder.toString();
+            
+            if(html != null && !"".equals(html)) {
+                out.write(html);
+            } 
         } finally {
             IOUtils.closeQuietly(in);
             IOUtils.closeQuietly(out);

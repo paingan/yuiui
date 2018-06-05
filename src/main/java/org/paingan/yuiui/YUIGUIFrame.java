@@ -90,7 +90,7 @@ public class YUIGUIFrame extends javax.swing.JFrame {
     private void txtPathMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPathMouseClicked
         JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
         
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript, css","js","css");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript, css, html","js","css","html");
         jfc.setFileFilter(filter);
         jfc.setDialogTitle("Choose a directory or file: ");
         jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -152,6 +152,10 @@ public class YUIGUIFrame extends javax.swing.JFrame {
                             if(".css".equals(ext)) {
                                 YUICompressor.compressCSS(inputFilename, outputFilename, o);
                                 txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
+                            }
+                            if(".html".equals(ext)) {
+                                YUICompressor.compressHTML(inputFilename, outputFilename, o);
+                                txtConsole.append(jfc.getSelectedFile().getName()+" HTML file compress successfully\n");
                             }
 
                         } catch (Exception ex) {
