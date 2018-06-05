@@ -93,9 +93,10 @@ public class YUICompressor {
             in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
 
             HtmlCompressor compressor =new HtmlCompressor();
-            compressor.setCompressJavaScript(true);
-            compressor.setCompressCss(true);
-            
+            compressor.setCompressJavaScript(o.compressJavaScript);
+            compressor.setCompressCss(o.compressCss);
+            compressor.setRemoveHttpProtocol(o.removeHttpProtocol);
+            compressor.setRemoveHttpsProtocol(o.removeHttpsProtocol);
             
             char[] buffer = new char[8192];
             int read;

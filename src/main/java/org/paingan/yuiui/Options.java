@@ -16,4 +16,10 @@ public class Options {
     public boolean verbose = false;
     public boolean preserveAllSemiColons = false;
     public boolean disableOptimizations = false;
+    
+    public boolean compressJavaScript = true;
+    public boolean compressCss =true;
+    public boolean removeComments = true;
+    public boolean removeHttpProtocol = true;
+    public boolean removeHttpsProtocol = true;
 }

@@ -40,7 +40,7 @@ public class YUIGUIFrame extends javax.swing.JFrame {
         txtPath = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Simple YUI Compressor v0.1b");
+        setTitle("Simple YUI Compressor v0.3 beta");
         setName("frm"); // NOI18N
         setResizable(false);
 
