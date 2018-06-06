@@ -5,11 +5,13 @@
  */
 package org.paingan.yuiui.swing;
 
+import com.sun.glass.events.KeyEvent;
 import org.paingan.yuiui.service.YUICompressor;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.paingan.yuiui.Options;
 
@@ -40,7 +42,8 @@ public class YUIFrame extends javax.swing.JFrame {
         txtConsole = new javax.swing.JTextArea();
         lblSource = new javax.swing.JLabel();
         txtPath = new javax.swing.JTextField();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        txtLogs = new javax.swing.JLabel();
+        menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemFileOpen = new javax.swing.JMenuItem();
         menuOpenRecent = new javax.swing.JMenu();
@@ -67,6 +70,8 @@ public class YUIFrame extends javax.swing.JFrame {
             }
         });
 
+        txtLogs.setText("logs:");
+
         menuFile.setText("File");
 
         mItemFileOpen.setText("Open...");
@@ -80,7 +85,7 @@ public class YUIFrame extends javax.swing.JFrame {
         menuOpenRecent.setText("Open Recent");
         menuFile.add(menuOpenRecent);
 
-        jMenuBar1.add(menuFile);
+        menuBar.add(menuFile);
 
         menuHelp.setText("Help");
 
@@ -88,25 +93,34 @@ public class YUIFrame extends javax.swing.JFrame {
         menuHelp.add(mItemHelpReport);
 
         menuItemAbout.setText("About");
+        menuItemAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAboutActionPerformed(evt);
+            }
+        });
         menuHelp.add(menuItemAbout);
 
-        jMenuBar1.add(menuHelp);
+        menuBar.add(menuHelp);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblSource)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPath))
-                    .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPath)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtLogs)
+                            .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 8, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +130,9 @@ public class YUIFrame extends javax.swing.JFrame {
                     .addComponent(lblSource)
                     .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtLogs)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -130,19 +146,29 @@ public class YUIFrame extends javax.swing.JFrame {
     private void mItemFileOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemFileOpenActionPerformed
         actionOpenFile();
     }//GEN-LAST:event_mItemFileOpenActionPerformed
+
+    private void menuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAboutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemAboutActionPerformed
     
     private void actionOpenFile() {
-        JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript, css, html","js","css","html");
+        
+        JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
+        
         jfc.setFileFilter(filter);
         jfc.setDialogTitle("Choose a directory or file: ");
-        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        jfc.setDialogType(jfc.SAVE_DIALOG);
+        jfc.setApproveButtonText("Compress");
+        jfc.setApproveButtonToolTipText("Compress file");
+        jfc.setApproveButtonMnemonic(KeyEvent.VK_C);
+        jfc.setFileSelectionMode(jfc.FILES_AND_DIRECTORIES);
         jfc.setMultiSelectionEnabled(false);
-
+       
         int returnValue = jfc.showSaveDialog(null);
         
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
+        if (returnValue == jfc.APPROVE_OPTION) {
             
             if (jfc.getSelectedFile().isFile()) {
                 txtPath.setText(jfc.getSelectedFile().getAbsolutePath());
@@ -155,6 +181,15 @@ public class YUIFrame extends javax.swing.JFrame {
                 String outputFilename = jfc.getSelectedFile().getParent() +"/"+ filename +".min"+ ext;
                 Options o = new Options();
 
+                JMenuItem newItem = new JMenuItem();
+                newItem.setText(inputFilename);
+                newItem.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        // TODO add your handling code here:
+                    }
+                });
+                menuOpenRecent.add(newItem);
+                
                 try {
                     if(".js".equals(ext)) {
                         YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
@@ -258,16 +293,17 @@ public class YUIFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jspConsole;
     private javax.swing.JLabel lblSource;
     private javax.swing.JMenuItem mItemFileOpen;
     private javax.swing.JMenuItem mItemHelpReport;
+    private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemAbout;
     private javax.swing.JMenu menuOpenRecent;
     private javax.swing.JTextArea txtConsole;
+    private javax.swing.JLabel txtLogs;
     private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables
 }
