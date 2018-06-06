@@ -40,6 +40,13 @@ public class YUIFrame extends javax.swing.JFrame {
         txtConsole = new javax.swing.JTextArea();
         lblSource = new javax.swing.JLabel();
         txtPath = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuFile = new javax.swing.JMenu();
+        mItemFileOpen = new javax.swing.JMenuItem();
+        menuOpenRecent = new javax.swing.JMenu();
+        menuHelp = new javax.swing.JMenu();
+        mItemHelpReport = new javax.swing.JMenuItem();
+        menuItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple YUI Compressor v0.3 beta");
@@ -59,6 +66,33 @@ public class YUIFrame extends javax.swing.JFrame {
                 txtPathMouseClicked(evt);
             }
         });
+
+        menuFile.setText("File");
+
+        mItemFileOpen.setText("Open...");
+        mItemFileOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemFileOpenActionPerformed(evt);
+            }
+        });
+        menuFile.add(mItemFileOpen);
+
+        menuOpenRecent.setText("Open Recent");
+        menuFile.add(menuOpenRecent);
+
+        jMenuBar1.add(menuFile);
+
+        menuHelp.setText("Help");
+
+        mItemHelpReport.setText("Report Issue");
+        menuHelp.add(mItemHelpReport);
+
+        menuItemAbout.setText("About");
+        menuHelp.add(menuItemAbout);
+
+        jMenuBar1.add(menuHelp);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,13 +117,21 @@ public class YUIFrame extends javax.swing.JFrame {
                     .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPathMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPathMouseClicked
+        actionOpenFile();
+    }//GEN-LAST:event_txtPathMouseClicked
+
+    private void mItemFileOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemFileOpenActionPerformed
+        actionOpenFile();
+    }//GEN-LAST:event_mItemFileOpenActionPerformed
+    
+    private void actionOpenFile() {
         JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript, css, html","js","css","html");
@@ -174,8 +216,8 @@ public class YUIFrame extends javax.swing.JFrame {
         } else {
             txtConsole.setText("No file chosen!");
         }
-    }//GEN-LAST:event_txtPathMouseClicked
-    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -216,8 +258,15 @@ public class YUIFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jspConsole;
     private javax.swing.JLabel lblSource;
+    private javax.swing.JMenuItem mItemFileOpen;
+    private javax.swing.JMenuItem mItemHelpReport;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenuItem menuItemAbout;
+    private javax.swing.JMenu menuOpenRecent;
     private javax.swing.JTextArea txtConsole;
     private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables

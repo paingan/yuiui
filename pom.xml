@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.paingan</groupId>
     <artifactId>yuiui-dev</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,7 +64,7 @@
                         <configuration>
                             <mainClass>org.paingan.yuiui.YUIGUIFrame</mainClass>
                             <attachToBuild>true</attachToBuild>
-                            <filename>yuiui-0.2-beta.jar</filename>
+                            <filename>yuiui-0.4-beta.jar</filename>
                         </configuration>
                         <goals>
                             <goal>one-jar</goal>
