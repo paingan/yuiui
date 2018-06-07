@@ -38,11 +38,11 @@ public class YUIFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         jspConsole = new javax.swing.JScrollPane();
         txtConsole = new javax.swing.JTextArea();
         lblSource = new javax.swing.JLabel();
         txtPath = new javax.swing.JTextField();
-        txtLogs = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemFileOpen = new javax.swing.JMenuItem();
@@ -50,6 +50,17 @@ public class YUIFrame extends javax.swing.JFrame {
         menuHelp = new javax.swing.JMenu();
         mItemHelpReport = new javax.swing.JMenuItem();
         menuItemAbout = new javax.swing.JMenuItem();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("yuiui - Simple YUI Compressor v0.4 beta");
@@ -69,8 +80,6 @@ public class YUIFrame extends javax.swing.JFrame {
                 txtPathMouseClicked(evt);
             }
         });
-
-        txtLogs.setText("log");
 
         menuFile.setText("File");
 
@@ -114,9 +123,7 @@ public class YUIFrame extends javax.swing.JFrame {
                         .addComponent(txtPath)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLogs)
-                            .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 8, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -127,9 +134,7 @@ public class YUIFrame extends javax.swing.JFrame {
                     .addComponent(lblSource)
                     .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLogs)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -308,6 +313,7 @@ public class YUIFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JScrollPane jspConsole;
     private javax.swing.JLabel lblSource;
     private javax.swing.JMenuItem mItemFileOpen;
@@ -318,7 +324,6 @@ public class YUIFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemAbout;
     private javax.swing.JMenu menuOpenRecent;
     private javax.swing.JTextArea txtConsole;
-    private javax.swing.JLabel txtLogs;
     private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables
 }

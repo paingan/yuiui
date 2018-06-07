@@ -2,6 +2,21 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
+    <Container class="javax.swing.JDialog" name="jDialog1">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuFile">
@@ -83,10 +98,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtLogs" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jspConsole" alignment="0" min="-2" pref="431" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jspConsole" min="-2" pref="431" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -102,9 +114,7 @@
                   <Component id="txtPath" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtLogs" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jspConsole" min="-2" pref="239" max="-2" attributes="0"/>
+              <Component id="jspConsole" min="-2" pref="261" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -139,11 +149,6 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtPathMouseClicked"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="txtLogs">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="log"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
