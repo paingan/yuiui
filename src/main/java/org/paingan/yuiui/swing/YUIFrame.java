@@ -52,7 +52,7 @@ public class YUIFrame extends javax.swing.JFrame {
         menuItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Simple YUI Compressor v0.3 beta");
+        setTitle("yuiui - Simple YUI Compressor v0.4 beta");
         setName("frm"); // NOI18N
         setResizable(false);
 
@@ -61,7 +61,7 @@ public class YUIFrame extends javax.swing.JFrame {
         txtConsole.setRows(5);
         jspConsole.setViewportView(txtConsole);
 
-        lblSource.setText("File Source:");
+        lblSource.setText("Source");
 
         txtPath.setEditable(false);
         txtPath.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -70,11 +70,11 @@ public class YUIFrame extends javax.swing.JFrame {
             }
         });
 
-        txtLogs.setText("logs:");
+        txtLogs.setText("log");
 
         menuFile.setText("File");
 
-        mItemFileOpen.setText("Open...");
+        mItemFileOpen.setText("Open");
         mItemFileOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mItemFileOpenActionPerformed(evt);
@@ -83,21 +83,18 @@ public class YUIFrame extends javax.swing.JFrame {
         menuFile.add(mItemFileOpen);
 
         menuOpenRecent.setText("Open Recent");
+        menuOpenRecent.setToolTipText("");
         menuFile.add(menuOpenRecent);
 
         menuBar.add(menuFile);
 
         menuHelp.setText("Help");
+        menuHelp.setActionCommand("");
 
-        mItemHelpReport.setText("Report Issue");
+        mItemHelpReport.setText("Report an Issue");
         menuHelp.add(mItemHelpReport);
 
         menuItemAbout.setText("About");
-        menuItemAbout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemAboutActionPerformed(evt);
-            }
-        });
         menuHelp.add(menuItemAbout);
 
         menuBar.add(menuHelp);
@@ -146,11 +143,10 @@ public class YUIFrame extends javax.swing.JFrame {
     private void mItemFileOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemFileOpenActionPerformed
         actionOpenFile();
     }//GEN-LAST:event_mItemFileOpenActionPerformed
-
-    private void menuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAboutActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuItemAboutActionPerformed
     
+    /**
+     * 
+     */
     private void actionOpenFile() {
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter("javascript, css, html","js","css","html");
@@ -173,78 +169,67 @@ public class YUIFrame extends javax.swing.JFrame {
             if (jfc.getSelectedFile().isFile()) {
                 txtPath.setText(jfc.getSelectedFile().getAbsolutePath());
                 
-                String inputFilename = jfc.getSelectedFile().getAbsolutePath();
+                final String inputFilename = jfc.getSelectedFile().getAbsolutePath();
                 int index = jfc.getSelectedFile().getName().indexOf(".");
                 String filename = jfc.getSelectedFile().getName().substring(0, index);
-                String ext = jfc.getSelectedFile().getName().substring(index);
+                final String ext = jfc.getSelectedFile().getName().substring(index);
 
-                String outputFilename = jfc.getSelectedFile().getParent() +"/"+ filename +".min"+ ext;
-                Options o = new Options();
+                final String outputFilename = jfc.getSelectedFile().getParent() +"/"+ filename +".min"+ ext;
+                final String fileNameExt = jfc.getSelectedFile().getName();
+//                Options o = new Options();
 
                 JMenuItem newItem = new JMenuItem();
                 newItem.setText(inputFilename);
                 newItem.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        // TODO add your handling code here:
+                        compressFile(inputFilename, outputFilename,fileNameExt , ext);
                     }
                 });
+                int sizeRecent = menuOpenRecent.getItemCount();
+                for(int i=0; i < sizeRecent; i++) {
+                    JMenuItem thisItem = menuOpenRecent.getItem(i);
+                    if(thisItem.getText().equals(inputFilename)) {
+                        menuOpenRecent.remove(thisItem);
+                    }
+                }
                 menuOpenRecent.add(newItem);
                 
-                try {
-                    if(".js".equals(ext)) {
-                        YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
-                        txtConsole.append(jfc.getSelectedFile().getName()+" JS file compress successfully\n");
-                    } 
-                    if(".css".equals(ext)) {
-                        YUICompressor.compressCSS(inputFilename, outputFilename, o);
-                        txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
-                    }
-                    if(".html".equals(ext)) {
-                        YUICompressor.compressHTML(inputFilename, outputFilename, o);
-                        txtConsole.append(jfc.getSelectedFile().getName()+" HTML file compress successfully\n");
-                    }
-
-                } catch (Exception ex) {
-                    Logger.getLogger(YUIFrame.class.getName()).log(Level.SEVERE, null, ex);
-
-                    txtConsole.append(ex.getMessage()+"\n");
-                }
+                
+                compressFile(inputFilename, outputFilename, fileNameExt, ext);
             }
             
             if(jfc.getSelectedFile().isDirectory()) {
                 File[] filesInDirectory = jfc.getSelectedFile().listFiles();
                 
                 for ( File file : filesInDirectory ) {
-                    txtPath.setText(jfc.getSelectedFile().getAbsolutePath());
+                    txtPath.setText(jfc.getSelectedFile().getPath());
                     
-                    String fileNameExt = file.getName();
-                    String inputFilename = file.getAbsolutePath();
+                    final String fileNameExt = file.getName();
+                    final String inputFilename = file.getAbsolutePath();
                     int index = fileNameExt.indexOf(".");
                     
                     if(index > 0) { // must has extension
-                        String ext = fileNameExt.substring(index);
+                        final String ext = fileNameExt.substring(index);
                         String filename = fileNameExt.substring(0, index);
-                        String outputFilename = file.getParent() +"/"+ filename +".min"+ ext;
-                        Options o = new Options();
+                        final String outputFilename = file.getParent() +"/"+ filename +".min"+ ext;
                         
-                        try {
-                            if(".js".equals(ext)) {
-                                YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
-                                txtConsole.append(jfc.getSelectedFile().getName()+" JS file compress successfully\n");
-                            } 
-                            if(".css".equals(ext)) {
-                                YUICompressor.compressCSS(inputFilename, outputFilename, o);
-                                txtConsole.append(jfc.getSelectedFile().getName()+" CSS file compress successfully\n");
+                        JMenuItem newItem = new JMenuItem();
+                        newItem.setText(inputFilename);
+                        newItem.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                compressFile(inputFilename, outputFilename,fileNameExt , ext);
                             }
-                            if(".html".equals(ext)) {
-                                YUICompressor.compressHTML(inputFilename, outputFilename, o);
-                                txtConsole.append(jfc.getSelectedFile().getName()+" HTML file compress successfully\n");
-                            }
-
-                        } catch (Exception ex) {
-                            Logger.getLogger(YUIFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            txtConsole.append(ex.getMessage()+"\n");
+                        });
+                        int sizeRecent = menuOpenRecent.getItemCount();
+                        for(int i=0; i < sizeRecent; i++) {
+                            JMenuItem thisItem = menuOpenRecent.getItem(i);
+                                if(thisItem.getText().equals(inputFilename)) {
+                                    menuOpenRecent.remove(thisItem);
+                                }
                         }
+                        menuOpenRecent.add(newItem);
+                
+                        compressFile(inputFilename, outputFilename,fileNameExt , ext);
                     }
                 }
             }
@@ -252,6 +237,39 @@ public class YUIFrame extends javax.swing.JFrame {
             txtConsole.setText("No file chosen!");
         }
     }
+    
+    /**
+     * 
+     * @param inputFilename
+     * @param outputFilename
+     * @param filename
+     * @param ext 
+     */
+    private void compressFile(String inputFilename, String outputFilename, String filename, String ext){
+
+        Options o = new Options();
+
+        try {
+            if (".js".equals(ext)) {
+                YUICompressor.compressJavaScript(inputFilename, outputFilename, o);
+                txtConsole.append(filename + " JS file compress successfully\n");
+            }
+            if (".css".equals(ext)) {
+                YUICompressor.compressCSS(inputFilename, outputFilename, o);
+                txtConsole.append(filename + " CSS file compress successfully\n");
+            }
+            if (".html".equals(ext)) {
+                YUICompressor.compressHTML(inputFilename, outputFilename, o);
+                txtConsole.append(filename + " HTML file compress successfully\n");
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(YUIFrame.class.getName()).log(Level.SEVERE, null, ex);
+            txtConsole.append(ex.getMessage() + "\n");
+        }
+        
+    }
+    
 
     /**
      * @param args the command line arguments
@@ -288,9 +306,6 @@ public class YUIFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jspConsole;
