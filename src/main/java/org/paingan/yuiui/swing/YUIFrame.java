@@ -38,7 +38,6 @@ public class YUIFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
         jspConsole = new javax.swing.JScrollPane();
         txtConsole = new javax.swing.JTextArea();
         lblSource = new javax.swing.JLabel();
@@ -51,19 +50,10 @@ public class YUIFrame extends javax.swing.JFrame {
         mItemHelpReport = new javax.swing.JMenuItem();
         menuItemAbout = new javax.swing.JMenuItem();
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("yuiui - Simple YUI Compressor v0.4 beta");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
         setName("frm"); // NOI18N
         setResizable(false);
 
@@ -75,15 +65,23 @@ public class YUIFrame extends javax.swing.JFrame {
         lblSource.setText("Source");
 
         txtPath.setEditable(false);
+        txtPath.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtPath.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtPathMouseClicked(evt);
             }
         });
 
+        menuBar.setBackground(java.awt.Color.lightGray);
+        menuBar.setForeground(new java.awt.Color(255, 51, 102));
+
+        menuFile.setForeground(new java.awt.Color(255, 51, 51));
         menuFile.setText("File");
+        menuFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuFile.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
 
         mItemFileOpen.setText("Open");
+        mItemFileOpen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mItemFileOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mItemFileOpenActionPerformed(evt);
@@ -93,17 +91,23 @@ public class YUIFrame extends javax.swing.JFrame {
 
         menuOpenRecent.setText("Open Recent");
         menuOpenRecent.setToolTipText("");
+        menuOpenRecent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuFile.add(menuOpenRecent);
 
         menuBar.add(menuFile);
 
+        menuHelp.setForeground(new java.awt.Color(255, 51, 51));
         menuHelp.setText("Help");
         menuHelp.setActionCommand("");
+        menuHelp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuHelp.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
 
         mItemHelpReport.setText("Report an Issue");
+        mItemHelpReport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuHelp.add(mItemHelpReport);
 
         menuItemAbout.setText("About");
+        menuItemAbout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuHelp.add(menuItemAbout);
 
         menuBar.add(menuHelp);
@@ -313,7 +317,6 @@ public class YUIFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JScrollPane jspConsole;
     private javax.swing.JLabel lblSource;
     private javax.swing.JMenuItem mItemFileOpen;
