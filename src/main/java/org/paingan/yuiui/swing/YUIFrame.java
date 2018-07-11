@@ -38,10 +38,12 @@ public class YUIFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jspConsole = new javax.swing.JScrollPane();
-        txtConsole = new javax.swing.JTextArea();
+        panelMain = new javax.swing.JPanel();
         lblSource = new javax.swing.JLabel();
         txtPath = new javax.swing.JTextField();
+        jspConsole = new javax.swing.JScrollPane();
+        txtConsole = new javax.swing.JTextArea();
+        lblClear = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemFileOpen = new javax.swing.JMenuItem();
@@ -51,20 +53,18 @@ public class YUIFrame extends javax.swing.JFrame {
         menuItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("yuiui - Simple YUI Compressor v0.4 beta");
+        setTitle("yuiui - Simple YUI Compressor v1.0");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
         setName("frm"); // NOI18N
         setResizable(false);
 
-        txtConsole.setEditable(false);
-        txtConsole.setColumns(20);
-        txtConsole.setRows(5);
-        jspConsole.setViewportView(txtConsole);
+        panelMain.setBackground(new java.awt.Color(255, 255, 255));
 
         lblSource.setText("Source");
 
         txtPath.setEditable(false);
+        txtPath.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtPath.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtPath.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -72,14 +72,63 @@ public class YUIFrame extends javax.swing.JFrame {
             }
         });
 
-        menuBar.setBackground(java.awt.Color.lightGray);
-        menuBar.setForeground(new java.awt.Color(255, 51, 102));
+        txtConsole.setEditable(false);
+        txtConsole.setColumns(20);
+        txtConsole.setFont(new java.awt.Font("Lucida Console", 0, 12)); // NOI18N
+        txtConsole.setRows(5);
+        txtConsole.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jspConsole.setViewportView(txtConsole);
 
-        menuFile.setForeground(new java.awt.Color(255, 51, 51));
+        lblClear.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        lblClear.setText("clear");
+        lblClear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblClearMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
+        panelMain.setLayout(panelMainLayout);
+        panelMainLayout.setHorizontalGroup(
+            panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelMainLayout.createSequentialGroup()
+                        .addComponent(lblSource)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPath))
+                    .addGroup(panelMainLayout.createSequentialGroup()
+                        .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 2, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblClear)
+                        .addGap(10, 10, 10)))
+                .addContainerGap())
+        );
+        panelMainLayout.setVerticalGroup(
+            panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSource)
+                    .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblClear)
+                .addContainerGap())
+        );
+
+        menuBar.setBorder(null);
+        menuBar.setFont(new java.awt.Font("Lucida Console", 0, 12)); // NOI18N
+
         menuFile.setText("File");
         menuFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuFile.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
 
+        mItemFileOpen.setMnemonic('O');
         mItemFileOpen.setText("Open");
         mItemFileOpen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mItemFileOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +138,7 @@ public class YUIFrame extends javax.swing.JFrame {
         });
         menuFile.add(mItemFileOpen);
 
+        menuOpenRecent.setMnemonic('R');
         menuOpenRecent.setText("Open Recent");
         menuOpenRecent.setToolTipText("");
         menuOpenRecent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -96,10 +146,10 @@ public class YUIFrame extends javax.swing.JFrame {
 
         menuBar.add(menuFile);
 
-        menuHelp.setForeground(new java.awt.Color(255, 51, 51));
         menuHelp.setText("Help");
         menuHelp.setActionCommand("");
         menuHelp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuHelp.setEnabled(false);
         menuHelp.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
 
         mItemHelpReport.setText("Report an Issue");
@@ -118,28 +168,11 @@ public class YUIFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblSource)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPath)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 8, Short.MAX_VALUE))))
+            .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSource)
-                    .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jspConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -152,6 +185,10 @@ public class YUIFrame extends javax.swing.JFrame {
     private void mItemFileOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemFileOpenActionPerformed
         actionOpenFile();
     }//GEN-LAST:event_mItemFileOpenActionPerformed
+
+    private void lblClearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClearMouseClicked
+        txtConsole.setText("");
+    }//GEN-LAST:event_lblClearMouseClicked
     
     /**
      * 
@@ -318,6 +355,7 @@ public class YUIFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jspConsole;
+    private javax.swing.JLabel lblClear;
     private javax.swing.JLabel lblSource;
     private javax.swing.JMenuItem mItemFileOpen;
     private javax.swing.JMenuItem mItemHelpReport;
@@ -326,6 +364,7 @@ public class YUIFrame extends javax.swing.JFrame {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemAbout;
     private javax.swing.JMenu menuOpenRecent;
+    private javax.swing.JPanel panelMain;
     private javax.swing.JTextArea txtConsole;
     private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables
